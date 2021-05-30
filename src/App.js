@@ -10,7 +10,6 @@ function App() {
   const [showAddTask,setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([])
   
-
   useEffect( () => {
     const getTasks = async() => {
       const tasksFromServer = await fetchTasks()
@@ -20,19 +19,19 @@ function App() {
   }, [])
 
   const fetchTasks = async () => {
-    const res = await fetch('https://tasktracker-api.herokuapp.com/tasks')
+    const res = await fetch('https://60b3b1f64ecdc1001747fc03.mockapi.io/task')
     const data = await res.json()
     return data
   }
 
   const fetchTask = async (id) => {
-    const res = await fetch(`https://tasktracker-api.herokuapp.com/tasks/${id}`)
+    const res = await fetch(`https://60b3b1f64ecdc1001747fc03.mockapi.io/task/${id}`)
     const data = await res.json()
     return data
   }
 
   const addTask = async (task) =>{
-    const res = await fetch('https://tasktracker-api.herokuapp.com/tasks', {
+    const res = await fetch('https://60b3b1f64ecdc1001747fc03.mockapi.io/task', {
       method: 'POST', 
       headers: {
         'Content-type': 'application/json'
@@ -44,14 +43,14 @@ function App() {
   }
 
   const deleteTask = async (id) => {
-    await fetch(`https://tasktracker-api.herokuapp.com/tasks/${id}`, {method: 'DELETE',})
+    await fetch(`https://60b3b1f64ecdc1001747fc03.mockapi.io/task/${id}`, {method: 'DELETE',})
     setTasks(tasks.filter( (task) => task.id !== id))
   }
 
   const toggleReminder = async (id) => {
     const taskToToggle =  await fetchTask(id)
     const updTask = {...taskToToggle, reminder: !taskToToggle.reminder}
-    const res = await fetch(`https://tasktracker-api.herokuapp.com/tasks/${id}`, {
+    const res = await fetch(`https://60b3b1f64ecdc1001747fc03.mockapi.io/task/${id}`, {
       method: 'PUT',
       headers: {
         'Content-type':'application/json'
@@ -63,6 +62,8 @@ function App() {
 
     setTasks(tasks.map( (task) => task.id === id? {...task, reminder: data.reminder} : task))
   }
+
+
 
   return ( <Router>
     <div className="container">
